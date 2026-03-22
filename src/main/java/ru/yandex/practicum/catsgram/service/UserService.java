@@ -1,6 +1,7 @@
 package ru.yandex.practicum.catsgram.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
 import ru.yandex.practicum.catsgram.model.User;
@@ -16,6 +17,10 @@ public class UserService {
 
     public Collection<User> findAll() {
         return users.values();
+    }
+
+    public Optional<User> findById(long userId) {
+        return Optional.ofNullable(users.get(userId));
     }
 
     // ---------- POST /users ----------
