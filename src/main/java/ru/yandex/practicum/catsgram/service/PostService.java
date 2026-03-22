@@ -23,8 +23,31 @@ public class PostService {
         this.userService = userService;
     }
 
-    public Collection<Post> findAll() {
-        return posts.values();
+//    public Collection<Post> findAll() {
+//        return posts.values();
+//    }
+
+    public Collection<Post> findAll(int size, String sort, int from) {
+        SortOrder sortOrder = SortOrder.from(sort);
+
+        if (sortOrder == null) {
+            throw new ConditionsNotMetException("Некорректный параметр sort");
+        }
+
+        return posts.values().stream()
+                // сортировка по дате
+                .sorted((p1, p2) -> {
+                    if (sortOrder == SortOrder.ASCENDING) {
+                        return p1.getPostDate().compareTo(p2.getPostDate());
+                    } else {
+                        return p2.getPostDate().compareTo(p1.getPostDate());
+                    }
+                })
+                // пропускаем from
+                .skip(from)
+                // берем size
+                .limit(size)
+                .toList();
     }
 
     public Optional<Post> findById(long postId) {
@@ -72,4 +95,22 @@ public class PostService {
                 .orElse(0);
         return ++currentMaxId;
     }
+
+    public enum SortOrder {
+        ASCENDING, DESCENDING;
+
+        // Преобразует строку в элемент перечисления
+        public static SortOrder from(String order) {
+            switch (order.toLowerCase()) {
+                case "ascending":
+                case "asc":
+                    return ASCENDING;
+                case "descending":
+                case "desc":
+                    return DESCENDING;
+                default: return null;
+            }
+        }
+    }
+
 }
