@@ -1,13 +1,9 @@
 package ru.yandex.practicum.catsgram.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
-import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
 import ru.yandex.practicum.catsgram.model.User;
-import ru.yandex.practicum.catsgram.service.PostService;
 import ru.yandex.practicum.catsgram.service.UserService;
 
-import java.time.Instant;
 import java.util.*;
 
 @RestController
@@ -23,6 +19,11 @@ public class UserController {
     @GetMapping
     public Collection<User> getUsers() {
         return userService.findAll();
+    }
+
+    @GetMapping("/{userId}")
+    public Optional<User> findById(@PathVariable long userId) {
+        return userService.findById(userId);
     }
 
     // ---------- POST /users ----------
