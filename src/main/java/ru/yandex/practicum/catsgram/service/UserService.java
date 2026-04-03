@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.DuplicatedDataException;
+import ru.yandex.practicum.catsgram.exception.NotFoundException;
 import ru.yandex.practicum.catsgram.model.User;
 import java.util.Optional;
 import java.time.Instant;
@@ -44,7 +45,7 @@ public class UserService {
         }
         User storedUser = users.get(user.getId());
         if (storedUser == null) {
-            return null;
+            throw new NotFoundException("Пользователь не найден");
         }
 
         if (user.getEmail() != null) {
