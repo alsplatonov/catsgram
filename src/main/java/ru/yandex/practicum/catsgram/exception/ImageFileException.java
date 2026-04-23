@@ -6,6 +6,7 @@ public class ImageFileException extends RuntimeException {
     public ImageFileException(String message, IOException e) {
         super(message, e);
     }
+
     public ImageFileException(String message) {
         super(message);
     }

@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:16.1
+    container_name: catsgram-db
+    restart: always
+    environment:
+      POSTGRES_DB: catsgram
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
