@@ -1,10 +1,8 @@
 package ru.yandex.practicum.catsgram.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.model.Post;
-import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.util.Collection;
