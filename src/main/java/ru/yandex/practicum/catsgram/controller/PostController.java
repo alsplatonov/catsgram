@@ -2,10 +2,15 @@ package ru.yandex.practicum.catsgram.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.catsgram.dto.NewPostRequest;
+import ru.yandex.practicum.catsgram.dto.PostDto;
+import ru.yandex.practicum.catsgram.dto.UpdatePostRequest;
+import ru.yandex.practicum.catsgram.dto.UserDto;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,27 +23,30 @@ public class PostController {
     }
 
     @GetMapping
-    public Collection<Post> findAll(
+    public List<PostDto> getPosts(
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "desc") String sort,
             @RequestParam(defaultValue = "0") int from
     ) {
-        return postService.findAll(size, sort, from);
+        return postService.getPosts(size, sort, from);
     }
 
     @GetMapping("/{postId}")
-    public Optional<Post> findById(@PathVariable long postId) {
-        return postService.findById(postId);
+    public PostDto findById(@PathVariable long postId) {
+        return postService.getPostById(postId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Post create(@RequestBody Post post) {
-        return postService.create(post);
+    public PostDto create(@RequestBody NewPostRequest post) {
+        return postService.createPost(post);
     }
 
-    @PutMapping
-    public Post update(@RequestBody Post newPost) {
-        return postService.update(newPost);
+    @PutMapping("/{postId}")
+    public PostDto updatePost(
+            @PathVariable long postId,
+            @RequestBody UpdatePostRequest request
+    ) {
+        return postService.updatePost(postId, request);
     }
 }

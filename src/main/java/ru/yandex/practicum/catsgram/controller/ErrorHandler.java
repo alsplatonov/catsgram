@@ -38,9 +38,17 @@ public class ErrorHandler {
     }
 
     // 500 — всё остальное
+    /*
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleOther(Throwable e) {
+        return new ErrorResponse("Произошла непредвиденная ошибка.");
+    }
+    */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleOther(Throwable e) {
+        e.printStackTrace(); // 👈 ВАЖНО
         return new ErrorResponse("Произошла непредвиденная ошибка.");
     }
 }
